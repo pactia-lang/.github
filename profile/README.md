@@ -77,7 +77,7 @@ Immutable versions. Digest-pinned lockfiles. Publisher identity. **Users fork pa
 
 ## See it
 
-Fleet management in **Pactia 1.0** — prose, packages, model, API, tests, and events in **78 lines**:
+Fleet management in **Pactia 1.0** — mostly prose, with tags only where structure matters (**55 lines**):
 
 <details>
 <summary><strong>fleet-management-mini.pactia</strong> — simplified whole product</summary>
@@ -90,31 +90,24 @@ import @pactia/rust-anb;
 
 product FleetManagement {
   > Track vehicles and fleets. Customers see only their own vehicles.
+  > Map API errors to the platform envelope.
+  > Cursor pagination on every list — never offset.
 
   @stack rust-anb { }
   @topology { mode: microservices, }
 
-  @guide {
-    > Map API errors to the platform envelope
-    > Cursor pagination on every list — never offset
-  }
-
   module fleet {
 
-    @actor admins { role: Admin, capabilities: [manage_fleets], }
-    @actor customers { role: Customer, capabilities: [track_vehicles], }
-
-    @rule admin_only_register {
-      > Only admins may register or decommission vehicles.
-    }
+    > Admins manage fleets and register vehicles.
+    > Customers track their own vehicles only.
+    > Only admins may register or decommission vehicles.
+    > All admin mutations must be audit-logged.
 
     model {
-      @enum VehicleStatus { values: [ACTIVE, INACTIVE, DECOMMISSIONED], }
-
       @entity Customer {
         @pk id: uuid,
         name: string,
-        @pii @unique email: string,
+        @pii email: string,
       }
 
       @entity Vehicle {
@@ -122,30 +115,19 @@ product FleetManagement {
         @fk { entity: Customer } customerId: uuid,
         @unique vin: string,
         label: string,
-        status: VehicleStatus,
-      }
-
-      @entity CreateVehicleRequest { customerId: uuid, vin: string, label: string, }
-
-      @entity VehicleCreatedPayload { vehicleId: uuid, vin: string, }
-
-      @relation customer_owns_vehicles {
-        from: Customer, to: Vehicle, verb: owns, cardinality: many,
+        status: string,
       }
     }
-
-    @security fleet { > All admin mutations must be audit-logged }
 
     #[database]
     service FleetService {
 
-      @auth { roles: [Customer, Admin] }
-      #[list] #[paginated] #[owner]
+      > Customers and admins list vehicles — owner-scoped, cursor-paginated.
+
       @api list_vehicles { method: GET, path: "/api/v1/vehicles", }
 
-      @auth { roles: [Admin] }
-      #[create] @status 201 @emit vehicle.created
-      @input CreateVehicleRequest
+      > Only admins create vehicles. Emit vehicle.created on success.
+
       @api create_vehicle { method: POST, path: "/api/v1/vehicles", }
 
       @test admin_registers_vehicle {
@@ -154,11 +136,6 @@ product FleetManagement {
         then: "status is 201 and vehicle.created is emitted",
       }
     }
-
-    @event vehicle.created {
-      payload: VehicleCreatedPayload,
-      > Fired when a vehicle is registered
-    }
   }
 }
 ```
@@ -166,12 +143,12 @@ product FleetManagement {
 </details>
 
 <p align="center">
-  <img
-    src="./assets/fleet-management-example.png"
-    alt="Pactia example: FleetManagement product with @stack, @topology, @tenancy, @guide, and fleet module @actor"
-    width="720"
-    style="border: 1px solid #d1d9e0; border-radius: 12px; max-width: 100%;"
-  />
+  <a href="./assets/fleet-management-example.png">
+    <img
+      src="./assets/fleet-management-example.png"
+      alt="Pactia 1.0 mini example: FleetManagement with prose rules, @stack, model entities, APIs, and @test"
+    />
+  </a>
 </p>
 
 <p align="center">
