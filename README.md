@@ -13,16 +13,8 @@ This repository configures the [pactia-lang](https://github.com/pactia-lang) Git
 
 Repository-specific templates live in each project repo (for example `spec/.github/ISSUE_TEMPLATE/`).
 
-## Publishing
+## Updating the organization profile
 
-```bash
-cd .github   # from workspace root: cd /path/to/pactia-lang/.github
-git init
-git add .
-git commit -m "Add organization profile and security policy"
-git branch -M main
-git remote add origin git@github.com:pactia-lang/.github.git
-git push -u origin main
-```
+Edit `profile/README.md`, commit, and push to `main`. GitHub renders it on the org **Overview** tab within a minute or two.
 
 The GitHub repo name must be exactly `.github`.
