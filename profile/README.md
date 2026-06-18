@@ -2,60 +2,70 @@
 
 **Write the pact. AI stays below the contract line.**
 
-Pactia is a contract language for software products: humans author durable intent (prose + `@tags`); AI implements below the line; tooling checks conformance.
+---
 
-## Code example
+### The problem
 
-From the [fleet-management-v2](https://github.com/pactia-lang/spec/blob/main/fixtures/kernel/fleet-management-v2.pactia) kernel fixture — product law, stack binding, and module actors in one file:
+AI can ship code fast — but product intent scatters across prompts, tickets, and stale docs.  
+Teams lose the line between *what the product must do* and *how an agent chose to implement it today*.
+
+### The idea
+
+**Pactia** is a contract language for whole products. Humans write durable law above the line — prose plus `@tags` for stack, API, data, security, and tests. Tooling lowers that law to IR. AI implements **below** the line and is checked against the pact.
+
+One source of truth. One compile path. Conformance you can audit.
+
+---
+
+## See it
+
+Fleet management in Pactia 1.0 — product rules, stack binding, tenancy, and module actors in a single `.pactia` file:
 
 <p align="center">
-  <img src="./assets/fleet-management-example.png" alt="Pactia 1.0 example: FleetManagement product with @stack, @topology, @tenancy, @guide, and fleet module @actor" width="752" />
+  <img
+    src="./assets/fleet-management-example.png"
+    alt="Pactia 1.0 example: FleetManagement product with @stack, @topology, @tenancy, @guide, and fleet module @actor"
+    width="720"
+    style="border: 1px solid #d1d9e0; border-radius: 12px; max-width: 100%;"
+  />
 </p>
 
-## Repositories
+<p align="center">
+  <a href="https://github.com/pactia-lang/spec/blob/main/fixtures/kernel/fleet-management-v2.pactia">View full fixture in spec →</a>
+</p>
 
-| Repo | Status | Description |
+---
+
+## What you get
+
+| Layer | Repo | What it does |
 | --- | --- | --- |
-| [spec](https://github.com/pactia-lang/spec) | Active | Normative language specification (human kernel, tag registry, intent line) |
-| [pactiac](https://github.com/pactia-lang/pactiac) | Active | Compiler — `pactiac compile` |
-| [vscode-pactia](https://github.com/pactia-lang/vscode-pactia) | Active | VS Code / Cursor extension (syntax, tags, diagnostics) |
-| [pactia](https://github.com/pactia-lang/pactia) | Planned | Package manager — `pactia init`, `pactia add`, `pactia build` |
-| [examples](https://github.com/pactia-lang/examples) | Planned | Canonical workspaces and sample `.pactia` programs |
+| **Law** | [spec](https://github.com/pactia-lang/spec) | Normative Pactia 1.0 — language, tag registry, intent line |
+| **Compiler** | [pactiac](https://github.com/pactia-lang/pactiac) | `pactiac compile` — parse, lower, emit module-scoped IR |
+| **Editor** | [vscode-pactia](https://github.com/pactia-lang/vscode-pactia) | Syntax, tags, and diagnostics in VS Code / Cursor |
+| **Packages** | [pactia](https://github.com/pactia-lang/pactia) | `pactia.toml`, lockfiles, publish *(in progress)* |
+| **Examples** | [examples](https://github.com/pactia-lang/examples) | Canonical workspaces *(planned)* |
 
-## Toolchain
+---
 
-| Tool | Role |
-| --- | --- |
-| **Pactia** | Contract language — humans write law above the contract line |
-| **pactiac** | Compiler — parse, lower, emit module-scoped IR |
-| **pactia** | Package manager — `pactia.toml`, `pactia.lock`, publish |
-
-## Quick start
+## Try the compiler
 
 ```bash
-git clone https://github.com/pactia-lang/spec.git
 git clone https://github.com/pactia-lang/pactiac.git
 cd pactiac && npm install && npm run build
-node packages/pactiac/dist/cli.js compile -i test/fixtures/kernel/fleet-management-v2.pactia -o ./out
+node packages/pactiac/dist/cli.js compile \
+  -i test/fixtures/kernel/fleet-management-v2.pactia \
+  -o ./out
 ```
 
-Package manager workflows (`pactia init`, `pactia build`) are under active development.
+Read the spec: [language reference](https://github.com/pactia-lang/spec/blob/main/docs/language-spec.md) · [intent line](https://github.com/pactia-lang/spec/blob/main/docs/overview.md#the-intent-line)
 
-## Specification
+---
 
-- Current normative version: **Pactia 1.0**
-- Authoring reference: [language spec](https://github.com/pactia-lang/spec/blob/main/docs/language-spec.md)
-- Contract boundary: [intent line](https://github.com/pactia-lang/spec/blob/main/docs/overview.md#the-intent-line)
-- Compatibility matrix: [spec README](https://github.com/pactia-lang/spec/blob/main/README.md)
+## Get involved
 
-## Contributing
+- Spec design and clarifications → [open an issue in spec](https://github.com/pactia-lang/spec/issues/new?template=spec_clarification.yml)
+- Compiler bugs → [pactiac issues](https://github.com/pactia-lang/pactiac/issues/new?template=bug_report.yml)
+- Extension feedback → [vscode-pactia issues](https://github.com/pactia-lang/vscode-pactia/issues)
 
-- Spec clarifications and RFCs: [spec issues](https://github.com/pactia-lang/spec/issues/new?template=spec_clarification.yml)
-- Compiler bugs: [pactiac issues](https://github.com/pactia-lang/pactiac/issues/new?template=bug_report.yml)
-- Extension bugs: [vscode-pactia issues](https://github.com/pactia-lang/vscode-pactia/issues)
-- Package manager: [pactia issues](https://github.com/pactia-lang/pactia/issues) (when published)
-
-## Links
-
-- Documentation: https://docs.pactia.io (planned)
-- Package registry: https://pactia.io (planned)
+**docs.pactia.io** and **pactia.io** (registry) — coming soon.
