@@ -79,85 +79,16 @@ Immutable versions. Digest-pinned lockfiles. Publisher identity. **Users fork pa
 
 Fleet management in **Pactia 1.0** — mostly prose, with tags only where structure matters (**55 lines**):
 
-<details>
-<summary><strong>fleet-management-mini.pactia</strong> — simplified whole product</summary>
+[![Pactia 1.0 fleet-management-mini example](https://raw.githubusercontent.com/pactia-lang/.github/main/profile/assets/fleet-management-example.png)](https://raw.githubusercontent.com/pactia-lang/.github/main/profile/assets/fleet-management-example.png)
 
-```pactia
-pactia 1.0
+Almost pure prose — same product, **`@stack` only**, no model or API tags (**37 lines**):
 
-import @pactia/protocol-rest;
-import @pactia/rust-anb;
+[![Pactia 1.0 fleet-management-prose example](https://raw.githubusercontent.com/pactia-lang/.github/main/profile/assets/fleet-management-prose-example.png)](https://raw.githubusercontent.com/pactia-lang/.github/main/profile/assets/fleet-management-prose-example.png)
 
-product FleetManagement {
-  > Track vehicles and fleets. Customers see only their own vehicles.
-  > Map API errors to the platform envelope.
-  > Cursor pagination on every list — never offset.
-
-  @stack rust-anb { }
-  @topology { mode: microservices, }
-
-  module fleet {
-
-    > Admins manage fleets and register vehicles.
-    > Customers track their own vehicles only.
-    > Only admins may register or decommission vehicles.
-    > All admin mutations must be audit-logged.
-
-    model {
-      @entity Customer {
-        @pk id: uuid,
-        name: string,
-        @pii email: string,
-      }
-
-      @entity Vehicle {
-        @pk id: uuid,
-        @fk { entity: Customer } customerId: uuid,
-        @unique vin: string,
-        label: string,
-        status: string,
-      }
-    }
-
-    #[database]
-    service FleetService {
-
-      > Customers and admins list vehicles — owner-scoped, cursor-paginated.
-
-      @api list_vehicles { method: GET, path: "/api/v1/vehicles", }
-
-      > Only admins create vehicles. Emit vehicle.created on success.
-
-      @api create_vehicle { method: POST, path: "/api/v1/vehicles", }
-
-      @test admin_registers_vehicle {
-        name: "Admin registers a vehicle",
-        when: "Admin is logged in and POST /api/v1/vehicles with valid body",
-        then: "status is 201 and vehicle.created is emitted",
-      }
-    }
-  }
-}
-```
-
-</details>
-
-<p align="center">
-  <a href="./assets/fleet-management-example.png">
-    <img
-      src="./assets/fleet-management-example.png"
-      alt="Pactia 1.0 mini example: FleetManagement with prose rules, @stack, model entities, APIs, and @test"
-    />
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-mini.pactia">Mini fixture</a>
-  ·
-  <a href="https://github.com/pactia-lang/spec/blob/main/fixtures/kernel/fleet-management-v2.pactia">Full fixture in spec</a>
-  ·
-  <a href="https://github.com/pactia-lang/spec/blob/main/docs/language-spec.md">Language spec</a>
-</p>
+[Mini fixture](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-mini.pactia)
+· [Prose fixture](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-prose.pactia)
+· [Full fixture in spec](https://github.com/pactia-lang/spec/blob/main/fixtures/kernel/fleet-management-v2.pactia)
+· [Language spec](https://github.com/pactia-lang/spec/blob/main/docs/language-spec.md)
 
 ---
 
