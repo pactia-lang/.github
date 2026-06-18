@@ -4,6 +4,14 @@
 
 Pactia is a contract language for software products: humans author durable intent (prose + `@tags`); AI implements below the line; tooling checks conformance.
 
+## Code example
+
+From the [fleet-management-v2](https://github.com/pactia-lang/spec/blob/main/fixtures/kernel/fleet-management-v2.pactia) kernel fixture — product law, stack binding, and module actors in one file:
+
+<p align="center">
+  <img src="./assets/fleet-management-example.png" alt="Pactia 1.0 example: FleetManagement product with @stack, @topology, @tenancy, @guide, and fleet module @actor" width="752" />
+</p>
+
 ## Repositories
 
 | Repo | Status | Description |
