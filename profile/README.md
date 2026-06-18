@@ -77,7 +77,93 @@ Immutable versions. Digest-pinned lockfiles. Publisher identity. **Users fork pa
 
 ## See it
 
-Fleet management in **Pactia 1.0** — product intent, stack binding, and module actors in one `.pactia` file:
+Fleet management in **Pactia 1.0** — prose, packages, model, API, tests, and events in **78 lines**:
+
+<details>
+<summary><strong>fleet-management-mini.pactia</strong> — simplified whole product</summary>
+
+```pactia
+pactia 1.0
+
+import @pactia/protocol-rest;
+import @pactia/rust-anb;
+
+product FleetManagement {
+  > Track vehicles and fleets. Customers see only their own vehicles.
+
+  @stack rust-anb { }
+  @topology { mode: microservices, }
+
+  @guide {
+    > Map API errors to the platform envelope
+    > Cursor pagination on every list — never offset
+  }
+
+  module fleet {
+
+    @actor admins { role: Admin, capabilities: [manage_fleets], }
+    @actor customers { role: Customer, capabilities: [track_vehicles], }
+
+    @rule admin_only_register {
+      > Only admins may register or decommission vehicles.
+    }
+
+    model {
+      @enum VehicleStatus { values: [ACTIVE, INACTIVE, DECOMMISSIONED], }
+
+      @entity Customer {
+        @pk id: uuid,
+        name: string,
+        @pii @unique email: string,
+      }
+
+      @entity Vehicle {
+        @pk id: uuid,
+        @fk { entity: Customer } customerId: uuid,
+        @unique vin: string,
+        label: string,
+        status: VehicleStatus,
+      }
+
+      @entity CreateVehicleRequest { customerId: uuid, vin: string, label: string, }
+
+      @entity VehicleCreatedPayload { vehicleId: uuid, vin: string, }
+
+      @relation customer_owns_vehicles {
+        from: Customer, to: Vehicle, verb: owns, cardinality: many,
+      }
+    }
+
+    @security fleet { > All admin mutations must be audit-logged }
+
+    #[database]
+    service FleetService {
+
+      @auth { roles: [Customer, Admin] }
+      #[list] #[paginated] #[owner]
+      @api list_vehicles { method: GET, path: "/api/v1/vehicles", }
+
+      @auth { roles: [Admin] }
+      #[create] @status 201 @emit vehicle.created
+      @input CreateVehicleRequest
+      @api create_vehicle { method: POST, path: "/api/v1/vehicles", }
+
+      @test admin_registers_vehicle {
+        name: "Admin registers a vehicle",
+        when: "Admin is logged in and POST /api/v1/vehicles with valid body",
+        then: "status is 201 and vehicle.created is emitted",
+      }
+    }
+
+    @event vehicle.created {
+      payload: VehicleCreatedPayload,
+      > Fired when a vehicle is registered
+    }
+  }
+}
+```
+
+</details>
 
 <p align="center">
   <img
@@ -89,9 +175,11 @@ Fleet management in **Pactia 1.0** — product intent, stack binding, and module
 </p>
 
 <p align="center">
-  <a href="https://github.com/pactia-lang/spec/blob/main/fixtures/kernel/fleet-management-v2.pactia">Full fixture in spec →</a>
+  <a href="https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-mini.pactia">Mini fixture</a>
   ·
-  <a href="https://github.com/pactia-lang/spec/blob/main/docs/language-spec.md">Language spec →</a>
+  <a href="https://github.com/pactia-lang/spec/blob/main/fixtures/kernel/fleet-management-v2.pactia">Full fixture in spec</a>
+  ·
+  <a href="https://github.com/pactia-lang/spec/blob/main/docs/language-spec.md">Language spec</a>
 </p>
 
 ---
