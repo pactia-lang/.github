@@ -38,7 +38,7 @@ Pactia does not replace Rust, TypeScript, or Swift. It sits **above** them — a
 └─────────────────────────────────────────────┘
 ────────────── conformance gate ───────────────
 ┌─────────────────────────────────────────────┐
-│  BELOW THE LINE — Implementation          │
+│  BELOW THE LINE — Implementation            │
 │  Logic · indexes · edge cases · tuning      │
 │  Owned by AI and engineers. Free.           │
 └─────────────────────────────────────────────┘
