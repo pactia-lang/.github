@@ -1,71 +1,127 @@
 # Pactia
 
-**Write the pact. AI stays below the contract line.**
+### The intent language for the AI era
+
+**You write what must stay true. AI writes how it works.**
+
+Like Rust is compiled by `rustc` and shared on crates.io — Pactia is an **AI-native programming language** compiled by **pactiac**, managed by **pactia**, with packages on **pactia.io**.
 
 ---
 
 ### The problem
 
-AI can ship code fast — but product intent scatters across prompts, tickets, and stale docs.  
-Teams lose the line between *what the product must do* and *how an agent chose to implement it today*.
+Every AI coding session starts cold. Agents re-read scattered READMEs, stale OpenAPI, old ADRs, and Slack threads — then guess. Auth drifts. Pagination diverges. Event shapes disagree. Senior engineers fix what the model invented instead of shaping what matters.
 
-### The idea
+The model is not the problem. **Durable product intent lives nowhere.**
 
-**Pactia** is a contract language for whole products. Humans write durable law above the line — prose plus `@tags` for stack, API, data, security, and tests. Tooling lowers that law to IR. AI implements **below** the line and is checked against the pact.
+---
 
-One source of truth. One compile path. Conformance you can audit.
+### A new paradigm
+
+| Era | You write | The machine |
+| --- | --- | --- |
+| 3GL — C, Rust | Algorithms + types | Executes |
+| 4GL — SQL, Terraform | Desired state | Reconciles |
+| **Pactia** | **Intent — what must stay true** | **Implements; tooling verifies** |
+
+Pactia does not replace Rust, TypeScript, or Swift. It sits **above** them — a versioned layer between humans, AI agents, and generated code.
+
+---
+
+### The intent line
+
+```
+┌─────────────────────────────────────────────┐
+│  ABOVE THE LINE — Intent                    │
+│  Entities · APIs · Roles · Policy · Stack   │
+│  Prose · Tags · Packages · Provenance       │
+└─────────────────────────────────────────────┘
+────────────── conformance gate ───────────────
+┌─────────────────────────────────────────────┐
+│  BELOW THE LINE — Implementation          │
+│  Logic · indexes · edge cases · tuning      │
+│  Owned by AI and engineers. Free.           │
+└─────────────────────────────────────────────┘
+```
+
+Above the line: what every session must inherit — regardless of model, engineer, or sprint.  
+Below the line: how it works today. Pactia never owns it.
+
+---
+
+### Prose is programming
+
+The most deliberate choice in Pactia: **natural language is not a comment to discard — it is a first-class input.**
+
+Lines that are not `@tags` or macros are prose. `pactiac` preserves them, tags them with provenance, and tooling turns them into grounded agent context — alongside deterministic facts from tags.
+
+A product owner can describe the product in plain English. An architect adds `@entity`, `@api`, `@auth`, `@test`. **Same language. Same pipeline. Same repository.**
+
+Graded precision: agent rules only, full product spec, or regulated depth — one compiler, one output path.
+
+---
+
+### Share intent like code
+
+The prompt is not the package. Chat history dies. **`use @pactia/kyc-compliance ^1.0`** pins the same intent in every repo, every session, every agent.
+
+| Package kind | Example | Purpose |
+| --- | --- | --- |
+| **Stack** | `@pactia/rust-anb` | Platform law — language, errors, pagination |
+| **Domain** | `@pactia/kyc-compliance` | Reusable product patterns — KYC, escrow, disputes |
+| **Protocol** | `@pactia/protocol-rest` | Wire shapes — REST, events, webhooks |
+
+Immutable versions. Digest-pinned lockfiles. Publisher identity. **Users fork packages, not the language.**
 
 ---
 
 ## See it
 
-Fleet management in Pactia 1.0 — product rules, stack binding, tenancy, and module actors in a single `.pactia` file:
+Fleet management in **Pactia 1.0** — product intent, stack binding, and module actors in one `.pactia` file:
 
 <p align="center">
   <img
     src="./assets/fleet-management-example.png"
-    alt="Pactia 1.0 example: FleetManagement product with @stack, @topology, @tenancy, @guide, and fleet module @actor"
+    alt="Pactia example: FleetManagement product with @stack, @topology, @tenancy, @guide, and fleet module @actor"
     width="720"
     style="border: 1px solid #d1d9e0; border-radius: 12px; max-width: 100%;"
   />
 </p>
 
 <p align="center">
-  <a href="https://github.com/pactia-lang/spec/blob/main/fixtures/kernel/fleet-management-v2.pactia">View full fixture in spec →</a>
+  <a href="https://github.com/pactia-lang/spec/blob/main/fixtures/kernel/fleet-management-v2.pactia">Full fixture in spec →</a>
+  ·
+  <a href="https://github.com/pactia-lang/spec/blob/main/docs/language-spec.md">Language spec →</a>
 </p>
 
 ---
 
-## What you get
+### The stack
 
-| Layer | Repo | What it does |
-| --- | --- | --- |
-| **Law** | [spec](https://github.com/pactia-lang/spec) | Normative Pactia 1.0 — language, tag registry, intent line |
-| **Compiler** | [pactiac](https://github.com/pactia-lang/pactiac) | `pactiac compile` — parse, lower, emit module-scoped IR |
-| **Editor** | [vscode-pactia](https://github.com/pactia-lang/vscode-pactia) | Syntax, tags, and diagnostics in VS Code / Cursor |
-| **Packages** | [pactia](https://github.com/pactia-lang/pactia) | `pactia.toml`, lockfiles, publish *(in progress)* |
-| **Examples** | [examples](https://github.com/pactia-lang/examples) | Canonical workspaces *(planned)* |
-
----
-
-## Try the compiler
-
-```bash
-git clone https://github.com/pactia-lang/pactiac.git
-cd pactiac && npm install && npm run build
-node packages/pactiac/dist/cli.js compile \
-  -i test/fixtures/kernel/fleet-management-v2.pactia \
-  -o ./out
+```
+*.pactia  ──pactiac──▶  AI-neutral IR  ──▶  agent context + specifications
+              ▲
+         pactia + pactia.io — resolve, lock, publish packages
 ```
 
-Read the spec: [language reference](https://github.com/pactia-lang/spec/blob/main/docs/language-spec.md) · [intent line](https://github.com/pactia-lang/spec/blob/main/docs/overview.md#the-intent-line)
+| | Repo | Role |
+| --- | --- | --- |
+| Language | [spec](https://github.com/pactia-lang/spec) | Pactia 1.0 — grammar, tags, intent line |
+| Compiler | [pactiac](https://github.com/pactia-lang/pactiac) | Deterministic compile to module-scoped IR |
+| Packages | [pactia](https://github.com/pactia-lang/pactia) | `pactia add`, lockfiles, publish *(in progress)* |
+| Editor | [vscode-pactia](https://github.com/pactia-lang/vscode-pactia) | Syntax, tags, diagnostics |
+| Examples | [examples](https://github.com/pactia-lang/examples) | Canonical workspaces *(planned)* |
+
+**Model-agnostic by design.** Switch Cursor, Claude Code, or Copilot — your `.pactia` files and lockfile stay the same.
 
 ---
 
-## Get involved
+### In one sentence
 
-- Spec design and clarifications → [open an issue in spec](https://github.com/pactia-lang/spec/issues/new?template=spec_clarification.yml)
-- Compiler bugs → [pactiac issues](https://github.com/pactia-lang/pactiac/issues/new?template=bug_report.yml)
-- Extension feedback → [vscode-pactia issues](https://github.com/pactia-lang/vscode-pactia/issues)
+Pactia is the durable, versioned layer between human intent and AI implementation — so every agent, every session, every model starts from the same ground truth about what your product must be.
 
-**docs.pactia.io** and **pactia.io** (registry) — coming soon.
+---
+
+**Get involved** — [spec issues](https://github.com/pactia-lang/spec/issues/new?template=spec_clarification.yml) · [pactiac](https://github.com/pactia-lang/pactiac/issues) · [vscode-pactia](https://github.com/pactia-lang/vscode-pactia/issues)
+
+[pactia.io](https://pactia.io) · [docs.pactia.io](https://docs.pactia.io) *(coming soon)*
