@@ -1,0 +1,10 @@
+name: Spec clarification (redirect)
+description: Open spec issues in the spec repository instead
+title: "[redirect]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Normative specification issues belong in [pactia-lang/spec](https://github.com/pactia-lang/spec/issues/new?template=spec_clarification.yml).
+
+        Please open your issue there so it is tracked with the correct labels and milestones.

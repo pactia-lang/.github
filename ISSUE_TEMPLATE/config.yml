@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Pactia specification
+    url: https://github.com/pactia-lang/spec/issues/new?template=spec_clarification.yml
+    about: Language design, tag registry, or normative spec questions
+  - name: Compiler (pactiac)
+    url: https://github.com/pactia-lang/pactiac/issues/new?template=bug_report.yml
+    about: Parser, lowering, emit, or CLI bugs
+  - name: Package manager (pactia)
+    url: https://github.com/pactia-lang/pactia/issues/new
+    about: Resolution, lockfiles, publish, or registry client issues

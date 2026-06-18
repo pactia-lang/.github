@@ -1,0 +1,24 @@
+name: Bug report
+description: Report a defect in an organization-wide template or policy repo
+title: "[bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For **pactiac** or **pactia** (package manager) bugs, use the linked issue forms in the target repository.
+        Use this template only for issues with the `.github` organization repository itself.
+  - type: textarea
+    id: description
+    attributes:
+      label: What went wrong?
+      description: Describe the issue with org templates, profile README, or security policy.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: false
