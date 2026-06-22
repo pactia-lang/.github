@@ -18,11 +18,11 @@ The model is not the problem. **Durable product intent lives nowhere.**
 
 ### A new paradigm
 
-| Era | You write | The machine |
-| --- | --- | --- |
-| 3GL — C, Rust | Algorithms + types | Executes |
-| 4GL — SQL, Terraform | Desired state | Reconciles |
-| **Pactia** | **Intent — what must stay true** | **Implements; tooling verifies** |
+| Era                  | You write                        | The machine                      |
+| -------------------- | -------------------------------- | -------------------------------- |
+| 3GL — C, Rust        | Algorithms + types               | Executes                         |
+| 4GL — SQL, Terraform | Desired state                    | Reconciles                       |
+| **Pactia**           | **Intent — what must stay true** | **Implements; tooling verifies** |
 
 Pactia does not replace Rust, TypeScript, or Swift. It sits **above** them — a versioned layer between humans, AI agents, and generated code.
 
@@ -65,11 +65,11 @@ Graded precision: agent rules only, full product spec, or regulated depth — on
 
 The prompt is not the package. Chat history dies. **`use @pactia/kyc-compliance ^1.0`** pins the same intent in every repo, every session, every agent.
 
-| Package kind | Example | Purpose |
-| --- | --- | --- |
-| **Stack** | `@pactia/rust-anb` | Platform law — language, errors, pagination |
-| **Domain** | `@pactia/kyc-compliance` | Reusable product patterns — KYC, escrow, disputes |
-| **Protocol** | `@pactia/protocol-rest` | Wire shapes — REST, events, webhooks |
+| Package kind | Example                  | Purpose                                           |
+| ------------ | ------------------------ | ------------------------------------------------- |
+| **Stack**    | `@pactia/rust-stack`     | Platform law — language, errors, pagination       |
+| **Domain**   | `@pactia/kyc-compliance` | Reusable product patterns — KYC, escrow, disputes |
+| **Surface**  | `@pactia/html-css-js`    | UI / static-site stack macros                     |
 
 Immutable versions. Digest-pinned lockfiles. Publisher identity. **Users fork packages, not the language.**
 
@@ -87,7 +87,7 @@ Almost pure prose — same product, **`@stack` only**, no model or API tags (**3
 
 [Mini fixture](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-mini.pactia)
 · [Prose fixture](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-prose.pactia)
-· [Full fixture in spec](https://github.com/pactia-lang/spec/blob/main/fixtures/kernel/fleet-management-v2.pactia)
+· [Relay fixture in pactiac](https://github.com/pactia-lang/pactiac/blob/main/test/fixtures/kernel/relay.pactia)
 · [Language spec](https://github.com/pactia-lang/spec/blob/main/docs/language-spec.md)
 
 ---
@@ -100,13 +100,13 @@ Almost pure prose — same product, **`@stack` only**, no model or API tags (**3
          pactia + pactia.io — resolve, lock, publish packages
 ```
 
-| | Repo | Role |
-| --- | --- | --- |
-| Language | [spec](https://github.com/pactia-lang/spec) | Pactia 1.0 — grammar, tags, intent line |
-| Compiler | [pactiac](https://github.com/pactia-lang/pactiac) | Deterministic compile to module-scoped IR |
-| Packages | [pactia](https://github.com/pactia-lang/pactia) | `pactia add`, lockfiles, publish *(in progress)* |
-| Editor | [vscode-pactia](https://github.com/pactia-lang/vscode-pactia) | Syntax, tags, diagnostics |
-| Examples | [examples](https://github.com/pactia-lang/examples) | Canonical workspaces *(planned)* |
+|          | Repo                                                          | Role                                             |
+| -------- | ------------------------------------------------------------- | ------------------------------------------------ |
+| Language | [spec](https://github.com/pactia-lang/spec)                   | Pactia 1.0 — grammar, tags, intent line          |
+| Compiler | [pactiac](https://github.com/pactia-lang/pactiac)             | Deterministic compile to module-scoped IR        |
+| Packages | [pactia](https://github.com/pactia-lang/pactia)               | `pactia add`, lockfiles, publish _(in progress)_ |
+| Editor   | [vscode-pactia](https://github.com/pactia-lang/vscode-pactia) | Syntax, tags, diagnostics                        |
+| Examples | [examples](https://github.com/pactia-lang/examples)           | Canonical workspaces _(planned)_                 |
 
 **Model-agnostic by design.** Switch Cursor, Claude Code, or Copilot — your `.pactia` files and lockfile stay the same.
 
@@ -120,4 +120,4 @@ Pactia is the durable, versioned layer between human intent and AI implementatio
 
 **Get involved** — [spec issues](https://github.com/pactia-lang/spec/issues/new?template=spec_clarification.yml) · [pactiac](https://github.com/pactia-lang/pactiac/issues) · [vscode-pactia](https://github.com/pactia-lang/vscode-pactia/issues)
 
-[pactia.io](https://pactia.io) · [docs.pactia.io](https://docs.pactia.io) *(coming soon)*
+[pactia.io](https://pactia.io) · [docs.pactia.io](https://docs.pactia.io) _(coming soon)_

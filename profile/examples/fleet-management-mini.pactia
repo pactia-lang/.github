@@ -1,12 +1,12 @@
 pactia 1.0
 
-import @pactia/protocol-rest;
-import @pactia/rust-anb;
+import @pactia/rust-stack;
+import @pactia/rust-stack;
 
 product FleetManagement {
   > Track vehicles and fleets. Customers see only their own vehicles.
 
-  @stack rust-anb { }
+  @stack rust-stack { }
   @topology { mode: microservices, }
 
   @guide {
@@ -51,9 +51,9 @@ product FleetManagement {
 
     @security fleet { > All admin mutations must be audit-logged }
 
-    #[database]
     service FleetService {
 
+      #[database]
       @auth { roles: [Customer, Admin] }
       #[list] #[paginated] #[owner]
       @api list_vehicles { method: GET, path: "/api/v1/vehicles", }
