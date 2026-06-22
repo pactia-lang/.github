@@ -63,13 +63,13 @@ Graded precision: agent rules only, full product spec, or regulated depth — on
 
 ### Share intent like code
 
-The prompt is not the package. Chat history dies. **`use @pactia/kyc-compliance ^1.0`** pins the same intent in every repo, every session, every agent.
+The prompt is not the package. Chat history dies. **`import @pactia/kyc-compliance;`** pins the same intent in every repo, every session, every agent.
 
 | Package kind | Example | Purpose |
 | --- | --- | --- |
-| **Stack** | `@pactia/rust-anb` | Platform law — language, errors, pagination |
-| **Domain** | `@pactia/kyc-compliance` | Reusable product patterns — KYC, escrow, disputes |
-| **Protocol** | `@pactia/protocol-rest` | Wire shapes — REST, events, webhooks |
+| **Stack** | `@pactia/rust-stack` | Platform law — language, errors, pagination |
+| **Kernel** | `@pactia/kernel` | Core tags, macros, and registry defaults |
+| **Surface** | `@pactia/html-css-js` | UI / static-site stack macros |
 
 Immutable versions. Digest-pinned lockfiles. Publisher identity. **Users fork packages, not the language.**
 
@@ -77,18 +77,37 @@ Immutable versions. Digest-pinned lockfiles. Publisher identity. **Users fork pa
 
 ## See it
 
-Fleet management in **Pactia 1.0** — mostly prose, with tags only where structure matters (**55 lines**):
+Fleet management in **Pactia 1.2** — tags and macros where structure matters:
 
-[![Pactia 1.0 fleet-management-mini example](https://raw.githubusercontent.com/pactia-lang/.github/main/profile/assets/fleet-management-example.png)](https://raw.githubusercontent.com/pactia-lang/.github/main/profile/assets/fleet-management-example.png)
+[![Pactia fleet-management-mini example](https://raw.githubusercontent.com/pactia-lang/.github/main/profile/assets/fleet-management-example.png)](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-mini.pactia)
 
-Almost pure prose — same product, **`@stack` only**, no model or API tags (**37 lines**):
+Almost pure prose — same product, **`#rust-stack` only**, no model or API tags:
 
-[![Pactia 1.0 fleet-management-prose example](https://raw.githubusercontent.com/pactia-lang/.github/main/profile/assets/fleet-management-prose-example.png)](https://raw.githubusercontent.com/pactia-lang/.github/main/profile/assets/fleet-management-prose-example.png)
+[![Pactia fleet-management-prose example](https://raw.githubusercontent.com/pactia-lang/.github/main/profile/assets/fleet-management-prose-example.png)](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-prose.pactia)
 
 [Mini fixture](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-mini.pactia)
 · [Prose fixture](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-prose.pactia)
-· [Full fixture in spec](https://github.com/pactia-lang/spec/blob/main/fixtures/kernel/fleet-management-v2.pactia)
+· [Relay fixture (pactiac)](https://github.com/pactia-lang/pactiac/blob/main/test/fixtures/kernel/relay.pactia)
+· [Marketplace example](https://github.com/pactia-lang/examples/tree/main/marketplace)
 · [Language spec](https://github.com/pactia-lang/spec/blob/main/docs/language-spec.md)
+
+---
+
+### Get started
+
+```bash
+# Package manager (includes compiler for pactia build)
+curl -fsSL https://raw.githubusercontent.com/pactia-lang/pactia/main/scripts/install-pactia.sh | bash
+
+# Editor — VS Code / Cursor: ext install pactia-lang.pactia
+```
+
+```bash
+pactia init my-product --stack rust-stack
+pactia build -C my-product
+```
+
+Compiler-only: [pactiac releases](https://github.com/pactia-lang/pactiac/releases).
 
 ---
 
@@ -97,16 +116,16 @@ Almost pure prose — same product, **`@stack` only**, no model or API tags (**3
 ```
 *.pactia  ──pactiac──▶  AI-neutral IR  ──▶  agent context + specifications
               ▲
-         pactia + pactia.io — resolve, lock, publish packages
+         pactia — init, fetch, add, build, lockfiles
 ```
 
 | | Repo | Role |
 | --- | --- | --- |
-| Language | [spec](https://github.com/pactia-lang/spec) | Pactia 1.0 — grammar, tags, intent line |
+| Language | [spec](https://github.com/pactia-lang/spec) | Pactia 1.2 — grammar, tags, packages, attach |
 | Compiler | [pactiac](https://github.com/pactia-lang/pactiac) | Deterministic compile to module-scoped IR |
-| Packages | [pactia](https://github.com/pactia-lang/pactia) | `pactia add`, lockfiles, publish *(in progress)* |
-| Editor | [vscode-pactia](https://github.com/pactia-lang/vscode-pactia) | Syntax, tags, diagnostics |
-| Examples | [examples](https://github.com/pactia-lang/examples) | Canonical workspaces *(planned)* |
+| Packages | [pactia](https://github.com/pactia-lang/pactia) | `pactia init`, `fetch`, `add`, `build` |
+| Editor | [vscode-pactia](https://github.com/pactia-lang/vscode-pactia) | Syntax highlighting (`pactia-lang.pactia`) |
+| Examples | [examples/marketplace](https://github.com/pactia-lang/examples) | Multi-module attach workspace |
 
 **Model-agnostic by design.** Switch Cursor, Claude Code, or Copilot — your `.pactia` files and lockfile stay the same.
 

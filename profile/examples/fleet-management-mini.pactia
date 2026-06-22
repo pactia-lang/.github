@@ -1,12 +1,13 @@
 pactia 1.0
 
-import @pactia/protocol-rest;
-import @pactia/rust-anb;
+import @pactia/kernel;
+import @pactia/rust-stack;
 
 product FleetManagement {
   > Track vehicles and fleets. Customers see only their own vehicles.
 
-  @stack rust-anb { }
+  #rust-stack
+
   @topology { mode: microservices, }
 
   @guide {
@@ -27,52 +28,67 @@ product FleetManagement {
       @enum VehicleStatus { values: [ACTIVE, INACTIVE, DECOMMISSIONED], }
 
       @entity Customer {
-        @pk id: uuid,
+        @@pk
+        id: uuid,
         name: string,
-        @pii @unique email: string,
+        email: string,
       }
 
       @entity Vehicle {
-        @pk id: uuid,
-        @fk { entity: Customer } customerId: uuid,
-        @unique vin: string,
+        @@pk
+        id: uuid,
+        customerId: uuid,
+        vin: string,
         label: string,
         status: VehicleStatus,
       }
 
-      @entity CreateVehicleRequest { customerId: uuid, vin: string, label: string, }
+      @entity CreateVehicleRequest {
+        customerId: uuid,
+        vin: string,
+        label: string,
+      }
 
-      @entity VehicleCreatedPayload { vehicleId: uuid, vin: string, }
+      @entity VehicleListResponse {
+        vehicles: Vehicle[],
+        @@nullable
+        nextCursor: string,
+      }
 
-      @relation customer_owns_vehicles {
-        from: Customer, to: Vehicle, verb: owns, cardinality: many,
+      @entity CreateVehicleResponse {
+        vehicleId: uuid,
+        vin: string,
       }
     }
 
     @security fleet { > All admin mutations must be audit-logged }
 
-    #[database]
     service FleetService {
+      #database
+      > Fleet tracking API
 
       @auth { roles: [Customer, Admin] }
-      #[list] #[paginated] #[owner]
-      @api list_vehicles { method: GET, path: "/api/v1/vehicles", }
+
+      #list
+      @@output VehicleListResponse
+      @api list_vehicles {
+        method: GET,
+        path: "/api/v1/vehicles",
+      }
 
       @auth { roles: [Admin] }
-      #[create] @status 201 @emit vehicle.created
-      @input CreateVehicleRequest
-      @api create_vehicle { method: POST, path: "/api/v1/vehicles", }
+      #create
+      @@output CreateVehicleResponse
+      @api create_vehicle {
+        method: POST,
+        path: "/api/v1/vehicles",
+      }
 
       @test admin_registers_vehicle {
         name: "Admin registers a vehicle",
         when: "Admin is logged in and POST /api/v1/vehicles with valid body",
-        then: "status is 201 and vehicle.created is emitted",
+        then: "status is 201",
       }
-    }
-
-    @event vehicle.created {
-      payload: VehicleCreatedPayload,
-      > Fired when a vehicle is registered
     }
   }
 }
