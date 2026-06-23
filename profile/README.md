@@ -103,7 +103,8 @@ curl -fsSL https://raw.githubusercontent.com/pactia-lang/pactia/main/scripts/ins
 ```
 
 ```bash
-pactia init my-product --stack rust-stack
+pactia init my-product --name MyProduct
+pactia add @pactia/rust-stack ^1.0
 pactia build -C my-product
 ```
 
@@ -116,14 +117,14 @@ Compiler-only: [pactiac releases](https://github.com/pactia-lang/pactiac/release
 ```
 *.pactia  ──pactiac──▶  AI-neutral IR  ──▶  agent context + specifications
               ▲
-         pactia — init, fetch, add, build, lockfiles
+         pactia — init, add, install, update, build, lockfiles
 ```
 
 | | Repo | Role |
 | --- | --- | --- |
 | Language | [spec](https://github.com/pactia-lang/spec) | Pactia 1.2 — grammar, tags, packages, attach |
 | Compiler | [pactiac](https://github.com/pactia-lang/pactiac) | Deterministic compile to module-scoped IR |
-| Packages | [pactia](https://github.com/pactia-lang/pactia) | `pactia init`, `fetch`, `add`, `build` |
+| Packages | [pactia](https://github.com/pactia-lang/pactia) | `pactia init`, `add`, `install`, `update`, `build` |
 | Editor | [vscode-pactia](https://github.com/pactia-lang/vscode-pactia) | Syntax highlighting (`pactia-lang.pactia`) |
 | Examples | [examples/marketplace](https://github.com/pactia-lang/examples) | Multi-module attach workspace |
 
