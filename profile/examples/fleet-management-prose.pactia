@@ -9,6 +9,14 @@ product FleetManagement {
   > Map all API errors to the platform envelope before returning to clients.
   > Use cursor pagination on every list endpoint — never offset.
 
+  context fleet_audit_policy {
+    path: "./context/fleet/audit-policy.md",    
+  }
+
+  @rule admin_audit_logged {
+    > ${fleet_audit_policy} Required for admin mutation endpoints.
+  }
+
   #rust-stack
 
   module fleet {

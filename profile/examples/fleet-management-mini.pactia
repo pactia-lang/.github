@@ -6,6 +6,10 @@ import @pactia/rust-stack;
 product FleetManagement {
   > Track vehicles and fleets. Customers see only their own vehicles.
 
+  context fleet_audit_policy {
+    path: "./context/fleet/audit-policy.md",    
+  }
+
   #rust-stack
 
   @topology { mode: microservices, }
@@ -13,6 +17,7 @@ product FleetManagement {
   @guide {
     > Map API errors to the platform envelope
     > Cursor pagination on every list — never offset
+    > ${fleet_audit_policy} Required for admin mutation endpoints.
   }
 
   module fleet {
