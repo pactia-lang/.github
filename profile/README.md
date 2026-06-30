@@ -75,63 +75,7 @@ Immutable versions. Digest-pinned lockfiles. Publisher identity. **Users fork pa
 
 ## See it
 
-Fleet management in **Pactia 1.2** — tags and macros where structure matters, prose-only with `#rust-stack`:
-
-```pactia
-pactia 1.0
-
-import @pactia/kernel;
-import @pactia/rust-stack;
-
-product FleetManagement {
-  > Track vehicles and fleets. Customers see only their own vehicles.
-
-  context fleet_audit_policy {
-    path: "./context/fleet/audit-policy.md",
-  }
-
-  #rust-stack
-
-  @topology { mode: microservices, }
-  @guide {
-    > Cursor pagination on every list — never offset
-  }
-
-  module fleet {
-    @actor admins { role: Admin, capabilities: [manage_fleets], }
-    @actor customers { role: Customer, capabilities: [track_vehicles], }
-
-    model {
-      @entity Vehicle {
-        @@pk
-        id: uuid,
-        customerId: uuid,
-        vin: string,
-        label: string,
-        status: VehicleStatus,
-      }
-    }
-
-    service FleetService {
-      #database
-      @auth { roles: [Customer, Admin] }
-
-      #list
-      @api list_vehicles {
-        method: GET,
-        path: "/api/v1/vehicles",
-      }
-
-      @auth { roles: [Admin] }
-      #create
-      @api create_vehicle {
-        method: POST,
-        path: "/api/v1/vehicles",
-      }
-    }
-  }
-}
-```
+Fleet management in **Pactia 1.2** — tags and macros where structure matters, prose-only with `#rust-stack`.
 
 [Full mini example](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-mini.pactia)
 · [Prose-only variant](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-prose.pactia)
