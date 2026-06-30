@@ -6,7 +6,8 @@ This repository configures the [pactia-lang](https://github.com/pactia-lang) Git
 
 | Path | Purpose |
 | --- | --- |
-| `profile/README.md` | Organization profile — shown on `github.com/pactia-lang` |
+| `profile/README.md` | Organization profile — shown on [github.com/pactia-lang](https://github.com/pactia-lang) |
+| `profile/examples/` | Example `.pactia` files referenced from the profile |
 | `SECURITY.md` | Security reporting policy |
 | `ISSUE_TEMPLATE/` | Default issue forms for this repo only |
 | `LICENSE` | MIT |

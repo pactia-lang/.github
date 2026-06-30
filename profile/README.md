@@ -57,8 +57,6 @@ Lines that are not `@tags` or macros are prose. `pactiac` preserves them, tags t
 
 A product owner can describe the product in plain English. An architect adds `@entity`, `@api`, `@auth`, `@test`. **Same language. Same pipeline. Same repository.**
 
-Graded precision: agent rules only, full product spec, or regulated depth — one compiler, one output path.
-
 ---
 
 ### Share intent like code
@@ -77,16 +75,10 @@ Immutable versions. Digest-pinned lockfiles. Publisher identity. **Users fork pa
 
 ## See it
 
-Fleet management in **Pactia 1.2** — tags and macros where structure matters:
+Fleet management in **Pactia 1.2** — tags and macros where structure matters, prose-only with `#rust-stack`.
 
-[![Pactia fleet-management-mini example](https://raw.githubusercontent.com/pactia-lang/.github/main/profile/assets/fleet-management-example.png)](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-mini.pactia)
-
-Almost pure prose — same product, **`#rust-stack` only**, no model or API tags:
-
-[![Pactia fleet-management-prose example](https://raw.githubusercontent.com/pactia-lang/.github/main/profile/assets/fleet-management-prose-example.png)](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-prose.pactia)
-
-[Mini fixture](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-mini.pactia)
-· [Prose fixture](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-prose.pactia)
+[Full mini example](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-mini.pactia)
+· [Prose-only variant](https://github.com/pactia-lang/.github/blob/main/profile/examples/fleet-management-prose.pactia)
 · [Relay fixture (pactiac)](https://github.com/pactia-lang/pactiac/blob/main/test/fixtures/kernel/relay.pactia)
 · [Marketplace example](https://github.com/pactia-lang/examples/tree/main/marketplace)
 · [Language spec](https://github.com/pactia-lang/spec/blob/main/docs/language-spec.md)
@@ -96,10 +88,11 @@ Almost pure prose — same product, **`#rust-stack` only**, no model or API tags
 ### Get started
 
 ```bash
-# Package manager (includes compiler for pactia build)
-curl -fsSL https://raw.githubusercontent.com/pactia-lang/pactia/main/scripts/install-pactia.sh | bash
+# Install pactia package manager (includes compiler)
+curl -fsSL https://raw.githubusercontent.com/pactia-lang/pactia/main/scripts/install-pactia.sh | bash -s v0.4.0
 
-# Editor — VS Code / Cursor: ext install pactia-lang.pactia
+# VS Code / Cursor extension
+code --install-extension pactia-lang.pactia
 ```
 
 ```bash
@@ -108,7 +101,7 @@ pactia add @pactia/rust-stack ^1.0
 pactia build -C my-product
 ```
 
-Compiler-only: [pactiac releases](https://github.com/pactia-lang/pactiac/releases).
+Compiler-only: [pactiac v0.4.0](https://github.com/pactia-lang/pactiac/releases/tag/v0.4.0).
 
 ---
 
